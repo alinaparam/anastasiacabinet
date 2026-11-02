@@ -168,7 +168,7 @@
       <!-- SUBSCRIPTION -->
       <div class="sub-card">
         <div class="sub-card-head">🎟 Абонемент</div>
-        <div class="sub-row">Оплаченных уроков: <span>3</span></div>
+        <div class="sub-row">Оплаченных уроков: <span>2</span></div>
       </div>
 
       <!-- SCHEDULE -->
@@ -177,7 +177,7 @@
         <div class="sched-item">
           <div class="sched-dot"></div>
           <div class="sched-day" style="width:auto">Следующий урок:</div>
-          <div class="sched-time">1 ноября, 14:00</div>
+          <div class="sched-time">3 ноября, 11:00</div>
         </div>
       </div>
 
@@ -193,9 +193,10 @@
       <div class="card">
         <div class="card-head">📖 Уроки и материалы</div>
         <div class="lesson-tabs">
-          <div class="lesson-tab active" onclick="switchLessons('october', this)">Октябрь</div>
+          <div class="lesson-tab" onclick="switchLessons('october', this)">Октябрь</div>
+          <div class="lesson-tab active" onclick="switchLessons('november', this)">Ноябрь</div>
         </div>
-        <div class="lesson-month active" id="lessons-october">
+        <div class="lesson-month" id="lessons-october">
           <div class="lesson-item">
             <div class="lesson-item-head" onclick="toggleLesson(this)">
               <div class="lesson-title">Пробный урок: знакомство и глагол to be</div>
@@ -217,10 +218,59 @@
               <div class="hw-block">
                 <div class="hw-block-title">&#9999;&#65039; Домашнее задание</div>
                 <div class="hw-item">
-                  <div class="hw-status todo">!</div>
+                  <div class="hw-status done">&#10003;</div>
                   <div>
                     <div class="hw-task">Сделать задания по ссылке</div>
                     <a class="hw-link" href="https://alinaparam.github.io/anastasiahmw/1.html" target="_blank">&#128214; Открыть задания</a>
+                  </div>
+                </div>
+                <div class="hw-item">
+                  <div class="hw-status done">&#10003;</div>
+                  <div>
+                    <div class="hw-task">Выучить новые слова</div>
+                    <a class="hw-link" href="https://termin.world/share/4371b9c2" target="_blank">&#128218; Открыть карточки</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lesson-month active" id="lessons-november">
+          <div class="lesson-item">
+            <div class="lesson-item-head" onclick="toggleLesson(this)">
+              <div class="lesson-title">What’s your job? Профессии и to be</div>
+              <div class="lesson-date-badge">1 ноября</div>
+              <div class="chevron">&#9660;</div>
+            </div>
+            <div class="lesson-body">
+              <div class="lesson-section">
+                <div class="lesson-section-label">Что делали на уроке</div>
+                <ul class="topic-list">
+                  <li>Как спросить «Как дела?»: How are you doing? How is it going? What’s up?</li>
+                  <li>Как ответить: хорошо, нейтрально, плохо (never better, so-so, can’t complain, exhausted, awful)</li>
+                  <li>Повторили to be: утверждение, отрицание, вопрос; am / is / are</li>
+                  <li>Listening: утверждение, отрицание или вопрос на слух</li>
+                  <li>10 профессий: где работают и что делают (doctor, teacher, chef, waiter, driver, police officer, pilot, singer, photographer, shop assistant)</li>
+                  <li>he / she + -s: he cooks, she teaches, he flies</li>
+                  <li>Игры: Flash!, Who am I?, Explain the job, Who is who?</li>
+                  <li>Перевод предложений на время</li>
+                  <li>Speaking: интервью в роли персонажа (имя, возраст, город, работа)</li>
+                </ul>
+              </div>
+              <div class="hw-block">
+                <div class="hw-block-title">&#9999;&#65039; Домашнее задание</div>
+                <div class="hw-item">
+                  <div class="hw-status todo">!</div>
+                  <div>
+                    <div class="hw-task">Сделать задание на доске</div>
+                    <a class="hw-link" href="https://app.holst.so/share/b/919d25d8-5862-401a-be2f-758fd601777f" target="_blank">&#128203; Открыть доску</a>
+                  </div>
+                </div>
+                <div class="hw-item">
+                  <div class="hw-status todo">!</div>
+                  <div>
+                    <div class="hw-task">Сделать интерактивные задания</div>
+                    <a class="hw-link" href="https://alinaparam.github.io/anastasiahmw/" target="_blank">&#128214; Открыть задания</a>
                   </div>
                 </div>
                 <div class="hw-item">
@@ -244,9 +294,16 @@
       <div class="card">
         <div class="card-head">📊 Прогресс</div>
         <div class="month-tabs">
-          <div class="month-tab active" onclick="switchMonth('october', this)">Октябрь</div>
+          <div class="month-tab" onclick="switchMonth('october', this)">Октябрь</div>
+          <div class="month-tab active" onclick="switchMonth('november', this)">Ноябрь</div>
         </div>
-        <div class="month-stats active" id="stats-october">
+        <div class="month-stats" id="stats-october">
+          <div class="stat-row">
+            <div class="stat-box"><div class="sv">1</div><div class="sl">Уроков</div></div>
+            <div class="stat-box"><div class="sv">1/1</div><div class="sl">Домашек</div></div>
+          </div>
+        </div>
+        <div class="month-stats active" id="stats-november">
           <div class="stat-row">
             <div class="stat-box"><div class="sv">1</div><div class="sl">Уроков</div></div>
             <div class="stat-box"><div class="sv">0/1</div><div class="sl">Домашек</div></div>
