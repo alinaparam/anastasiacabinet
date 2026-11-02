@@ -96,18 +96,23 @@
   .aw-toast { position: fixed; inset: 0; z-index: 100; background: rgba(58,50,40,.45); display: grid; place-items: center; padding: 20px; animation: awFade .25s ease; }
   .aw-toast.bye { opacity: 0; transition: opacity .25s; }
   @keyframes awFade { from { opacity: 0; } }
-  .aw-toast-box { position: relative; overflow: hidden; background: var(--card); border-radius: 24px; padding: 26px 24px 22px; width: min(440px, 100%); text-align: center; box-shadow: 0 20px 50px rgba(58,50,40,.3); animation: awPop .4s cubic-bezier(.2,1.4,.4,1); }
+  .aw-toast-box { position: relative; overflow: hidden auto; max-height: calc(100vh - 40px); background: var(--card); border-radius: 24px; padding: 24px 22px 20px; width: min(480px, 100%); text-align: center; box-shadow: 0 20px 50px rgba(58,50,40,.3); animation: awPop .4s cubic-bezier(.2,1.4,.4,1); }
   @keyframes awPop { from { transform: scale(.7); opacity: 0; } }
   .aw-toast h3 { font-family: "Playfair Display", serif; font-size: 24px; margin-bottom: 14px; position: relative; }
-  .aw-toast-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; position: relative; }
+  .aw-toast-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 6px; position: relative; }
+  .aw-toast-list.many .aw-toast-it { width: 128px; }
+  .aw-toast-list.many .aw-toast-it .ic { width: 64px; height: 64px; }
+  .aw-toast-list.many .aw-toast-it b { font-size: 13px; }
+  .aw-toast-list.many .aw-toast-it em { font-size: 11px; }
   .aw-toast-it { display: grid; justify-items: center; gap: 3px; width: 150px; }
   .aw-toast-it .ic { width: 96px; height: 96px; filter: drop-shadow(0 5px 8px rgba(138,86,10,.3)); animation: awWob 1.2s ease .3s; }
   .aw-toast-it svg { width: 100%; height: 100%; }
   @keyframes awWob { 30% { transform: rotate(-8deg) scale(1.1); } 60% { transform: rotate(6deg); } }
   .aw-toast-it b { font-size: 15px; }
   .aw-toast-it em { font-style: normal; font-size: 12.5px; color: var(--muted); font-weight: 600; }
-  .aw-toast-stk { display: flex; align-items: center; gap: 10px; text-align: left; margin-top: 16px; background: var(--cream); border-radius: 16px; padding: 10px 12px; font-size: 13px; color: var(--muted); position: relative; }
-  .aw-toast-stk img { width: 54px; height: 54px; object-fit: contain; flex-shrink: 0; }
+  .aw-toast-stk { display: grid; justify-items: center; gap: 6px; margin-top: 16px; background: var(--cream); border-radius: 16px; padding: 10px 12px; font-size: 13px; color: var(--muted); position: relative; }
+  .aw-toast-stk .imgs { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; }
+  .aw-toast-stk img { width: 50px; height: 50px; object-fit: contain; }
   .aw-toast-stk b { color: var(--text); }
   .aw-toast button { margin-top: 18px; border: none; background: var(--text); color: #fff; font: inherit; font-weight: 700; font-size: 15px; padding: 11px 30px; border-radius: 999px; cursor: pointer; position: relative; }
   .aw-confetti { position: absolute; inset: 0; pointer-events: none; }
@@ -483,7 +488,10 @@ function switchMonth(id, tab) {
 
   const items = [...document.querySelectorAll(".lesson-item")];
   const lessons = items.length;
-  const hwDone = items.filter(it => it.querySelector(".hw-block .hw-status") && !it.querySelector(".hw-status.todo")).length;
+  /* сделанные домашки — сумма "a" из "a/b" в карточке Прогресс; если её нет — по галочкам в уроках */
+  const hwStats = [...document.querySelectorAll(".month-stats .sv")].map(x => x.textContent.trim()).filter(x => /^\d+\/\d+$/.test(x));
+  const hwDone = hwStats.length ? hwStats.reduce((n, x) => n + +x.split("/")[0], 0)
+    : items.filter(it => it.querySelector(".hw-block .hw-status") && !it.querySelector(".hw-status.todo")).length;
   const months = [...document.querySelectorAll(".lesson-month")].filter(m => m.querySelector(".lesson-item")).length;
   /* текущий (последний) месяц ещё идёт — за него Perfect month не даём */
   const perfect = [...document.querySelectorAll(".month-stats")].slice(0, -1).some(m => {
@@ -595,8 +603,8 @@ function switchMonth(id, tab) {
     const many = newAw.length > 1;
     ov.innerHTML = `<div class="aw-toast-box">
       <div class="aw-confetti">${Array.from({ length: 26 }, (_, i) => `<i style="left:${Math.random() * 100}%;animation-delay:${Math.random() * .6}s;background:${["#F7C948", "#E89B7B", "#9DBF8E", "#7FA7D9", "#E58BB0"][i % 5]}"></i>`).join("")}</div>
-      ${newAw.length ? `<h3>${many ? "Новые награды!" : "Новая награда!"}</h3><div class="aw-toast-list">${newAw.map(a => `<div class="aw-toast-it"><span class="ic">${trophy(a.kind, a.emb)}</span><b>${a.name}</b><em>${a.ru}</em></div>`).join("")}</div>` : ""}
-      ${newStk.length ? `<div class="aw-toast-stk">${newStk.map(s => `<img src="${s.img}" alt="">`).join("")}<span>${newStk.length > 1 ? "Открылись новые стикеры" : "Открылся новый стикер"}: <b>${newStk.map(s => s.name).join(", ")}</b>. Нажми на стикер рядом с именем, чтобы выбрать.</span></div>` : ""}
+      ${newAw.length ? `<h3>${many ? "Новые награды!" : "Новая награда!"}</h3><div class="aw-toast-list${newAw.length > 2 ? " many" : ""}">${newAw.map(a => `<div class="aw-toast-it"><span class="ic">${trophy(a.kind, a.emb)}</span><b>${a.name}</b><em>${a.ru}</em></div>`).join("")}</div>` : ""}
+      ${newStk.length ? `<div class="aw-toast-stk"><div class="imgs">${newStk.map(s => `<img src="${s.img}" alt="">`).join("")}</div><span>${newStk.length > 1 ? "Открылись новые стикеры" : "Открылся новый стикер"}: <b>${newStk.map(s => s.name).join(", ")}</b>. Нажми на стикер рядом с именем, чтобы выбрать.</span></div>` : ""}
       <button>Ура! 🎉</button></div>`;
     document.body.appendChild(ov);
     save("awSeen:" + who, got.map(a => a.id)); save("stkSeen:" + who, unlocked.map(s => s.name));
